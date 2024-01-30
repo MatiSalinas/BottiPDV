@@ -1,0 +1,95 @@
+/* Fondo de la aplicación */
+QWidget {
+    background-color: #333333; /* Color de fondo de la aplicación */
+}
+
+QLabel {
+    font-size: 14px;
+    
+    font-family: "Terminal", monospace;
+    color: #FFFFFF; /* Color de texto */
+
+}
+
+total {
+    color:#52FF42
+}
+
+
+
+QLineEdit {
+    background-color: #505050; /* Color de fondo de QLineEdit */
+    color: #080808; /* Color de texto de QLineEdit */
+    font-family: "Terminal", monospace;
+}
+
+QLineEdit:disabled {
+    background-color: #333333; /* Color de fondo de QLineEdit deshabilitado */
+    color: #CCCCCC; /* Color de texto de QLineEdit deshabilitado */
+}
+
+QTabWidget::pane {
+    background-color: #333333; /* Color de fondo de la pestaña */
+}
+
+QTabBar::tab {
+    background-color: #444444; /* Color de fondo de la pestaña no seleccionada */
+    color: #FFFFFF; /* Color de texto de la pestaña no seleccionada */
+}
+
+QTabBar::tab:selected {
+    background-color: #1E90FF; /* Color de fondo de la pestaña seleccionada */
+    color: #FFFFFF; /* Color de texto de la pestaña seleccionada */
+}
+
+QTableWidget {
+    background-color: #444444; /* Color de fondo de QTableWidget */
+    color: #FFFFFF; /* Color de texto de QTableWidget */
+}
+
+QPushButton {
+    background-color: #1E90FF; /* Color de fondo del botón */
+    color: #FFFFFF; /* Color de texto del botón */
+    border: 1px solid #1E90FF; /* Borde del botón */
+    padding:10px;
+    font-size: 14px;
+    font-family: "Terminal", monospace;
+}
+
+QPushButton:hover {
+    background-color: #007ACC; /* Color de fondo del botón al pasar el mouse */
+    border: 1px solid #007ACC; /* Borde del botón al pasar el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #005D99; /* Color de fondo del botón al presionar */
+    border: 1px solid #005D99; /* Borde del botón al presionar */
+}
+
+QLCDNumber {
+    background-color: #333333; /* Color de fondo de QLCDNumber */
+    color: #FFFFFF; /* Color de texto de QLCDNumber */
+    font-size:16px;
+}
+
+QRadioButton {
+    font-size: 16px; /* Tamaño de fuente */
+    font-family: "Arial", sans-serif; /* Fuente moderna, puedes ajustarla a tu preferencia */
+    color: #FFFFFF; /* Color de texto */
+}
+
+QRadioButton::indicator {
+    width: 16px; /* Ancho del indicador (círculo) */
+    height: 16px; /* Altura del indicador (círculo) */
+    border-radius: 8px;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #1E90FF; /* Color de fondo cuando el botón está seleccionado */
+    border: 1px solid #1E90FF; /* Borde cuando el botón está seleccionado */
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: #FFFFFF; /* Color de fondo cuando el botón no está seleccionado */
+    border: 1px solid #000000; /* Borde cuando el botón no está seleccionado */
+}
