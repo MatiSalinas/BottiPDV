@@ -79,9 +79,7 @@ class Mi_Ventana(QMainWindow):
         validador = QtGui.QIntValidator(0, 10000000)
         validador_float = QtGui.QDoubleValidator(0.00,999999.99,2)
         self.ingreso_precio.setValidator(validador_float)
-        self.ingreso_paginas.setValidator(validador)
         self.ingreso_cantidad.setValidator(validador)
-        self.ingreso_anio.setValidator(validador) #validadores para asegurarnos que no se ingresen caracteres que no sean numeros en la parte de compras
         
 
         #Inventario
@@ -108,17 +106,16 @@ class Mi_Ventana(QMainWindow):
         fila = 0
         self.tablaLibros.setRowCount(fila)
         for item in inventario.lista_inventario:
-            if type(item) == libreriaClases.Libro:
+            if type(item) == libreriaClases.Bebida:
                 fila = self.tablaLibros.rowCount()
                 self.tablaLibros.setRowCount(fila+1)
                 self.tablaLibros.setItem(fila, 0, QTableWidgetItem(str(item.codigo)))
                 self.tablaLibros.setItem(fila, 1, QTableWidgetItem(item.nombre))
                 self.tablaLibros.setItem(fila, 2, QTableWidgetItem(str(item.precio)))
-                self.tablaLibros.setItem(fila, 3, QTableWidgetItem(str(item.cantidad)))
-                self.tablaLibros.setItem(fila, 4, QTableWidgetItem(str(item.autor)))
-                self.tablaLibros.setItem(fila, 5, QTableWidgetItem(str(item.genero)))
-                self.tablaLibros.setItem(fila, 6, QTableWidgetItem(str(item.anio)))
-                self.tablaLibros.setItem(fila, 7, QTableWidgetItem(str(item.num_paginas)))
+                self.tablaLibros.setItem(fila, 3, QTableWidgetItem(str(item.precio_compra)))
+                self.tablaLibros.setItem(fila, 4, QTableWidgetItem(str(item.cantidad)))
+                self.tablaLibros.setItem(fila, 5, QTableWidgetItem(str(item.tipo)))
+
     def cargar_inventarioP(self):
         #Todo
         #re size las columnas asi ocupan toda la tabla
@@ -141,7 +138,7 @@ class Mi_Ventana(QMainWindow):
             self.cargar_inventarioL()
         except AttributeError:
                     titulo = 'Error'
-                    cuerpo = 'Seleccione un Libro primero'
+                    cuerpo = 'Seleccione una Bebida primero'
                     mensaje(titulo,cuerpo)
     
     def EditarLInventario(self):
@@ -226,36 +223,28 @@ class Mi_Ventana(QMainWindow):
         if self.rb_crearLibro.isChecked():
             self.ingreso_nombre.setEnabled(True)
             self.ingreso_precio.setEnabled(True)
+            self.ingreso_precioC.setEnabled(True)
             self.ingreso_cantidad.setEnabled(True)
-            self.ingreso_genero.setEnabled(True)
-            self.ingreso_paginas.setEnabled(True)
-            self.ingreso_anio.setEnabled(True)
-            self.ingreso_autor.setEnabled(True)
+            self.ingreso_tipo.setEnabled(True)
             
         if self.rb_CrearProducto.isChecked():
             self.ingreso_nombre.setEnabled(True)
             self.ingreso_precio.setEnabled(True)
+            self.ingreso_precioC.setEnabled(True)
             self.ingreso_cantidad.setEnabled(True)
-            self.ingreso_genero.setEnabled(False)
-            self.ingreso_paginas.setEnabled(False)
-            self.ingreso_anio.setEnabled(False)
-            self.ingreso_autor.setEnabled(False)
+            self.ingreso_tipo.setEnabled(False)
+
         if self.rb_entradaLibro.isChecked():
             self.ingreso_nombre.setEnabled(False)
             self.ingreso_precio.setEnabled(False)
             self.ingreso_cantidad.setEnabled(True)
-            self.ingreso_genero.setEnabled(False)
-            self.ingreso_paginas.setEnabled(False)
-            self.ingreso_anio.setEnabled(False)
-            self.ingreso_autor.setEnabled(False)
+            self.ingreso_tipo.setEnabled(False)
         if self.rb_entradaProducto.isChecked():
             self.ingreso_nombre.setEnabled(False)
             self.ingreso_precio.setEnabled(False)
+            self.ingreso_precioC.setEnabled(False)
             self.ingreso_cantidad.setEnabled(True)
-            self.ingreso_genero.setEnabled(False)
-            self.ingreso_paginas.setEnabled(False)
-            self.ingreso_anio.setEnabled(False)
-            self.ingreso_autor.setEnabled(False)
+            self.ingreso_tipo.setEnabled(False)
 
     def cargar_compras_codigo(self):
         codigo = self.ingreso_codigo.text()
@@ -267,15 +256,12 @@ class Mi_Ventana(QMainWindow):
         if self.rb_entradaLibro.isChecked():
             for producto_existente in inventario.lista_inventario:
 
-                if codigo == str(producto_existente.codigo) and type(producto_existente)==libreriaClases.Libro:
+                if codigo == str(producto_existente.codigo) and type(producto_existente)==libreriaClases.Bebida:
                     self.ingreso_nombre.setText(producto_existente.nombre)
                     self.ingreso_precio.setText(str(producto_existente.precio))
-                    self.ingreso_genero.setText(producto_existente.genero)
-                    self.ingreso_paginas.setText(str(producto_existente.num_paginas))
-                    self.ingreso_anio.setText(str(producto_existente.anio))
-                    self.ingreso_autor.setText(producto_existente.autor)
+                    self.ingreso_precioC.setText(str(producto_existente.precio_compra))
                     return
-            mensaje('Error','No hay un Libro con ese codigo')
+            mensaje('Error','No hay una Bebida con ese codigo')
         if self.rb_entradaProducto.isChecked():
             for producto_existente in inventario.lista_inventario:
                 if codigo == str(producto_existente.codigo) and type(producto_existente)==libreriaClases.Producto:
@@ -290,11 +276,8 @@ class Mi_Ventana(QMainWindow):
             self.ingreso_codigo.setText('')
             self.ingreso_nombre.setText('')
             self.ingreso_precio.setText('')
+            self.ingreso_precioC.setText('')
             self.ingreso_cantidad.setText('')
-            self.ingreso_genero.setText('')
-            self.ingreso_paginas.setText('')
-            self.ingreso_anio.setText('')
-            self.ingreso_autor.setText('')
         if self.rb_crearLibro.isChecked():    
             try:
                 codigo =int(self.ingreso_codigo.text())  
@@ -305,14 +288,12 @@ class Mi_Ventana(QMainWindow):
                         return
                 nombre = self.ingreso_nombre.text()
                 precio = float(self.ingreso_precio.text())
+                precio_compra = float(self.ingreso_precioC.text())
                 cantidad = int(self.ingreso_cantidad.text())
-                genero = self.ingreso_genero.text()
-                paginas =self.ingreso_paginas.text()
-                anio =self.ingreso_anio.text()
-                autor =self.ingreso_autor.text()
-                libroNuevo = libreriaClases.Libro(nombre,codigo,precio,cantidad,autor,genero,anio,paginas)
-                inventario.lista_inventario.append(libroNuevo)
-                libroNuevo.insertar_libro()
+                tipo = self.ingreso_tipo.currentText()
+                bebidaNueva = libreriaClases.Bebida(nombre,codigo,precio,precio_compra,cantidad,tipo)
+                inventario.lista_inventario.append(bebidaNueva)
+                bebidaNueva.insertar_libro()
                 self.cargar_inventarioL()
                 limpiar()
             except ValueError:
@@ -338,10 +319,10 @@ class Mi_Ventana(QMainWindow):
         if self.rb_entradaLibro.isChecked():
             codigo =int(self.ingreso_codigo.text())
             for producto_existente in inventario.lista_inventario:
-                if str(codigo) == str(producto_existente.codigo) and type(producto_existente)==libreriaClases.Libro:
+                if str(codigo) == str(producto_existente.codigo) and type(producto_existente)==libreriaClases.Bebida:
                     cantidad = int(self.ingreso_cantidad.text()) + producto_existente.cantidad
                     producto_existente.cantidad += int(self.ingreso_cantidad.text())
-                    producto_existente.editar_tabla(producto_existente.nombre,producto_existente.precio,cantidad,producto_existente.autor,producto_existente.genero,producto_existente.anio,producto_existente.num_paginas)
+                    producto_existente.editar_tabla(producto_existente.nombre,producto_existente.precio,producto_existente.precio_compra,cantidad,producto_existente.tipo)
                     limpiar()
                     self.cargar_inventarioL()
         if self.rb_entradaProducto.isChecked():
@@ -828,7 +809,7 @@ class VentanaEditarPromo(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('EditarPromos.ui',self)
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
         
         self.boton_actualizar.clicked.connect(self.actualizar_precio)
@@ -914,7 +895,7 @@ class VentanaReportVentas(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('reportVentas.ui',self)
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
     
         self.botonCargar.clicked.connect(self.cargar_ventas)

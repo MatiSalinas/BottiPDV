@@ -10,7 +10,7 @@ class Promo:
         self.precio = precio
         self.productos = productos
         
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
 
     def agregar_productos(self,producto,cantidad_producto):
@@ -34,12 +34,13 @@ class Promo:
 
 
 class Producto:
-    def __init__(self,nombre,codigo,precio,cantidad):
+    def __init__(self,nombre,codigo,precio,precio_compra,cantidad):
         self.nombre = nombre
         self.codigo = codigo
         self.precio = precio
+        self.precio_compra = precio_compra
         self.cantidad = cantidad
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
     def editar(self,nombre,precio,cantidad):
         self.nombre = nombre
@@ -67,46 +68,45 @@ class Producto:
             WHERE codigo = ?
         ''', ( self.cantidad, self.codigo))
         self.conn.commit()
-
-class Libro(Producto):
-    def __init__(self,nombre,codigo,precio,cantidad,autor,genero,anio,num_paginas):
-        super().__init__(nombre,codigo,precio,cantidad)
-        self.autor = autor
-        self.genero = genero
-        self.anio = anio
-        self.num_paginas = num_paginas
-        self.conn = sqlite3.connect('libreria.db')
+''''nombre
+codigo
+precio
+precio_compra
+cantidad
+tipo'''
+class Bebida(Producto):
+    def __init__(self,nombre,codigo,precio,precio_compra,cantidad,tipo):
+        super().__init__(nombre,codigo,precio,precio_compra,cantidad)
+        self.tipo = tipo
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
 
-    def editar(self,nombre,precio,cantidad,autor,genero,anio,num_paginas):
+    def editar(self,nombre,precio,precio_compra,cantidad,tipo):
         self.nombre = nombre
         self.precio = precio
         self.cantidad = cantidad
-        self.autor = autor
-        self.genero = genero
-        self.anio = anio
-        self.num_paginas = num_paginas
-    
-    def editar_tabla(self, nombre, precio, cantidad, autor, genero, anio, num_paginas):
+        self.precio_compra = precio_compra
+        self.tipo = tipo   
+    def editar_tabla(self, nombre, precio, precio_compra,cantidad,tipo):
         
         self.cursor.execute('''
             UPDATE Libro
-            SET nombre = ?, precio = ?, cantidad = ?, autor = ?, genero = ?, anio = ?, num_paginas = ?
+            SET nombre = ?, precio = ?, precio_compra = ?,cantidad = ?, tipo = ?
             WHERE codigo = ?
-        ''', (nombre, precio, cantidad, autor, genero, anio, num_paginas, self.codigo))
+        ''', (nombre, precio, precio_compra,cantidad, tipo, self.codigo))
         self.conn.commit()
 
     def __str__(self):
         return f"{self.nombre} {self.precio}"
     def insertar_libro(self):
         self.cursor.execute('''
-        INSERT INTO Libro (nombre, codigo, precio,cantidad, autor, genero, anio, num_paginas)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', (self.nombre, self.codigo, self.precio,self.cantidad, self.autor, self.genero, self.anio, self.num_paginas))
+        INSERT INTO Bebida (nombre, codigo, precio,precio_compra,cantidad, tipo)
+        VALUES (?, ?, ?, ?, ?, ?)''', (self.nombre, self.codigo, self.precio,self.precio_compra,self.cantidad, self.tipo))
         self.conn.commit()
     def Actualizar_venta(self,unidades):
         self.cantidad -= unidades
         self.cursor.execute('''
-            UPDATE Libro
+            UPDATE Bebida
             SET cantidad = ?
             WHERE codigo = ?
         ''', ( self.cantidad, self.codigo))
@@ -117,7 +117,7 @@ class Inventario:
     def __init__(self):
         self.lista_inventario= []
         self.lista_cajas = []
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
 
     def agregar_inventario(self,producto):
@@ -157,8 +157,8 @@ class Inventario:
         productos = self.cursor.fetchall()
         
         # Recupera los libros de la tabla Libro
-        self.cursor.execute('SELECT nombre, codigo, precio,cantidad, autor, genero, anio, num_paginas FROM Libro')
-        libros = self.cursor.fetchall()
+        self.cursor.execute('SELECT nombre, codigo, precio,precio_compra,cantidad,tipo FROM Bebida')
+        bebidas = self.cursor.fetchall()
         
         self.cursor.execute('SELECT nombre,codigo,precio FROM Promos')
         promos= self.cursor.fetchall()
@@ -170,10 +170,10 @@ class Inventario:
             self.lista_inventario.append(producto)
 
         
-        for libro_data in libros:
-            nombre, codigo, precio,cantidad, autor, genero, anio, num_paginas = libro_data
-            libro = Libro(nombre, int(codigo), precio, int(cantidad), autor, genero, anio, num_paginas) 
-            self.lista_inventario.append(libro)
+        for bebida_data in bebidas:
+            nombre, codigo, precio,precio_compra,cantidad, tipo = bebida_data
+            bebida = Bebida(nombre, int(codigo), precio,precio_compra, int(cantidad), tipo) 
+            self.lista_inventario.append(bebida)
 
         for promos_data in promos:
             nombre,codigo,precio = promos_data
@@ -186,16 +186,12 @@ class Inventario:
                     if str(producto_existente.codigo) == str(codigo_producto):
                         promo.agregar_productos(producto_existente,cantidad_producto)
             self.lista_inventario.append(promo)
-    def __str__(self):
-        for libro in self.lista_inventario:
-            print(libro.codigo)
-            print(type(libro.codigo))
 
     def eliminar_libro(self, codigo):
         for producto_existente in self.lista_inventario:
             if int(codigo) == producto_existente.codigo:
                 self.lista_inventario.remove(producto_existente)
-                self.cursor.execute('DELETE FROM Libro WHERE codigo = ?', (codigo,))
+                self.cursor.execute('DELETE FROM Bebida WHERE codigo = ?', (codigo,))
                 self.conn.commit()
     
     def eliminar_producto(self, codigo):
@@ -210,7 +206,7 @@ class Venta:
         self.articulos = []
         self.total = 0
         self.turno_asociado = turno_asociado
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
     
     def agregar_venta(self,codigo,nombre,precio,cantidad):
@@ -246,7 +242,7 @@ class Caja:
         self.ventas =  []
         self.caja =  0
         self.sobranteFaltante = 0
-        self.conn = sqlite3.connect('libreria.db')
+        self.conn = sqlite3.connect('bottiglia.db')
         self.cursor = self.conn.cursor()
         self.estado = False
     def crear_venta(self):
@@ -254,7 +250,7 @@ class Caja:
         self.ventas.append(venta)
     def vender(self,total):
         self.num_ventas += 1
-        self.caja += total
+        self.caja = self.caja + total
         
 
     def abrir_caja(self,vendedor):

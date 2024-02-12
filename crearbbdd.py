@@ -1,7 +1,7 @@
 import sqlite3
 
 # Conectar a la base de datos (creará el archivo de base de datos si no existe)
-conn = sqlite3.connect('libreria.db')
+conn = sqlite3.connect('bottiglia.db')
 cursor = conn.cursor()
 
 # Crear la tabla Producto si no existe
@@ -11,6 +11,7 @@ cursor.execute('''
         nombre TEXT NOT NULL,
         codigo TEXT UNIQUE NOT NULL,
         precio REAL NOT NULL,
+        precio_compra REAL NOT NULL,
         cantidad INTEGER NOT NULL
     )
 ''')
@@ -36,16 +37,14 @@ cursor.execute('''
 
 # Crear la tabla Libro si no existe
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Libro (
+    CREATE TABLE IF NOT EXISTS Bebida (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nombre TEXT NOT NULL,
         codigo TEXT UNIQUE NOT NULL,
         precio REAL NOT NULL,
+        precio_compra REAL NOT NULL,
         cantidad INTEGER NOT NULL,
-        autor TEXT NOT NULL,
-        genero TEXT NOT NULL,
-        anio INTEGER NOT NULL,
-        num_paginas INTEGER NOT NULL
+        tipo TEXT NOT NULL
     )
 ''')
 

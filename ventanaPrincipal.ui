@@ -24,7 +24,7 @@
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -296,126 +296,45 @@ border-radius: 12px;</string>
            <string/>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_13">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Año:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="2">
-            <widget class="QLineEdit" name="ingreso_paginas">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>autor:</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0">
             <widget class="QRadioButton" name="rb_entradaLibro">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>Entrada Libro</string>
+              <string>Entrada Bebida</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Genero:</string>
-             </property>
+           <item row="7" column="2">
+            <widget class="QComboBox" name="ingreso_tipo">
+             <item>
+              <property name="text">
+               <string>Cerveza</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Gaseosa</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Vino Tinto</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Vino Blanco</string>
+              </property>
+             </item>
             </widget>
            </item>
-           <item row="4" column="2">
-            <widget class="QLineEdit" name="ingreso_precio">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2" colspan="2">
-            <widget class="QRadioButton" name="rb_CrearProducto">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Crear Producto</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="2">
-            <widget class="QLineEdit" name="ingreso_autor">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2">
+           <item row="6" column="2">
             <widget class="QLineEdit" name="ingreso_cantidad">
              <property name="enabled">
               <bool>true</bool>
              </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QLabel" name="label_7">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Cantidad de unidades:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="2">
-            <widget class="QLineEdit" name="ingreso_anio">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QRadioButton" name="rb_entradaProducto">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Entrada Producto</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="2">
-            <widget class="QLineEdit" name="ingreso_genero">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLineEdit" name="ingreso_codigo">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -437,6 +356,16 @@ border-radius: 12px;</string>
              </property>
             </widget>
            </item>
+           <item row="1" column="2">
+            <widget class="QRadioButton" name="rb_entradaProducto">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>Entrada Producto</string>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="0">
             <widget class="QLabel" name="label_6">
              <property name="styleSheet">
@@ -447,13 +376,38 @@ border-radius: 12px;</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_11">
+           <item row="0" column="2" colspan="2">
+            <widget class="QRadioButton" name="rb_CrearProducto">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>paginas:</string>
+              <string>Crear Producto</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLineEdit" name="ingreso_precio">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="ingreso_nombre">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="2">
+            <widget class="QPushButton" name="botonGuardarCompras">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(0, 170, 0);
+color:snow;</string>
+             </property>
+             <property name="text">
+              <string>Guardar</string>
              </property>
             </widget>
            </item>
@@ -463,12 +417,25 @@ border-radius: 12px;</string>
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>Crear Libro</string>
+              <string>Crear Bebida</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
-            <widget class="QLineEdit" name="ingreso_nombre">
+           <item row="6" column="0" colspan="2">
+            <widget class="QLabel" name="label_7">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>Cantidad de unidades:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="ingreso_codigo">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -484,16 +451,25 @@ border-radius: 12px;</string>
              </property>
             </widget>
            </item>
-           <item row="10" column="2">
-            <widget class="QPushButton" name="botonGuardarCompras">
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_8">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(0, 170, 0);
-color:snow;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
-              <string>Guardar</string>
+              <string>Tipo:</string>
              </property>
             </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Precio Compra:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLineEdit" name="ingreso_precioC"/>
            </item>
           </layout>
          </widget>
@@ -530,27 +506,17 @@ color:snow;</string>
           </column>
           <column>
            <property name="text">
+            <string>Precio_compra</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
             <string>Cantidad</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Autor</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Genero</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Anio</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Num. paginas</string>
+            <string>Tipo</string>
            </property>
           </column>
          </widget>
@@ -578,7 +544,7 @@ color:snow;</string>
         <item row="0" column="0">
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>Libros</string>
+           <string>Bebidas</string>
           </property>
          </widget>
         </item>
